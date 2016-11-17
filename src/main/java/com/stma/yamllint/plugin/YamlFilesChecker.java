@@ -14,11 +14,13 @@ import org.apache.maven.plugin.Mojo;
 
 public class YamlFilesChecker extends SimpleFileVisitor<Path> {
 
-    private final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:*.yaml");
-    private Mojo mojo;
+    private final PathMatcher matcher;
+    private YamlLintMojo mojo;
 
-    public YamlFilesChecker(Mojo mojo) {
+    public YamlFilesChecker(YamlLintMojo mojo) {
         this.mojo = mojo;
+        System.out.println(this.mojo.getPatternMatcher());
+        matcher = FileSystems.getDefault().getPathMatcher(this.mojo.getPatternMatcher());
     }
 
     void check(Path file) throws IOException {

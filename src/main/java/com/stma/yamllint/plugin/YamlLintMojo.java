@@ -20,6 +20,9 @@ public class YamlLintMojo extends AbstractMojo {
     @Parameter( defaultValue = "${basedir}", property = "baseDir", required = true )
     private File projectBaseDir;
 
+    @Parameter( property = "yamllint.patternMatcher", defaultValue = "glob:*.yaml" )
+    private String patternMatcher;
+
     public void execute() throws MojoExecutionException {
         try {
             Files.walkFileTree(projectBaseDir.toPath(), new YamlFilesChecker(this));
@@ -27,4 +30,9 @@ public class YamlLintMojo extends AbstractMojo {
             getLog().error(e);
         }
     }
+
+    public String getPatternMatcher() {
+        return this.patternMatcher;
+    }
+
 }
